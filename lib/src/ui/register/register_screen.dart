@@ -3,7 +3,9 @@ import 'package:http/http.dart' as http;
 import 'package:lesson_api_post/src/ui/register/accpect_screen.dart';
 
 class RegisterScreen extends StatefulWidget {
-  const RegisterScreen({Key? key}) : super(key: key);
+  final String token;
+
+  const RegisterScreen({Key? key, required this.token}) : super(key: key);
 
   @override
   _RegisterScreenState createState() => _RegisterScreenState();
@@ -41,14 +43,18 @@ class _RegisterScreenState extends State<RegisterScreen> {
           GestureDetector(
             onTap: () {
               setState(() {
-                _sendData(_controller.text);
+                if (_controller.text.length == 9) {
+                  _sendData(_controller.text);
+                }
               });
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) {
-                  return AsspectScreen(number: _controller.text);
-                }),
-              );
+              if (_controller.text.length == 9) {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) {
+                    return AsspectScreen(number: _controller.text);
+                  }),
+                );
+              }
             },
             child: Container(
               height: 100,
